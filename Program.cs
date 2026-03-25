@@ -103,6 +103,12 @@ app.MapPost("/sendMessage", async (HttpContext context) =>
     }
 
     // --- Получение обязательных query-параметров ---
+    // chat_id  — идентификатор получателя (чат, канал или пользователь),
+    //            которому адресовано уведомление.
+    // batch_id — уникальный идентификатор пачки (GUID). Объединяет одно
+    //            текстовое сообщение и все прикреплённые к нему файлы
+    //            в рамках одного уведомления. Позволяет определить,
+    //            какие файлы относятся к какому сообщению.
     var chatId = context.Request.Query["chat_id"].FirstOrDefault();
     var batchId = context.Request.Query["batch_id"].FirstOrDefault();
 
@@ -175,6 +181,9 @@ app.MapPost("/sendFile", async (HttpContext context) =>
     }
 
     // --- Получение обязательных query-параметров ---
+    // chat_id  — идентификатор получателя (см. описание в /sendMessage).
+    // batch_id — идентификатор пачки, связывающий этот файл с сообщением
+    //            из соответствующего вызова /sendMessage.
     var chatId = context.Request.Query["chat_id"].FirstOrDefault();
     var batchId = context.Request.Query["batch_id"].FirstOrDefault();
 
